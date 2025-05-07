@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@types/node": "^22.15.14",
+    "tslint": "^5.20.1",
+    "typescript": "^5.8.3"
+  }
+}
