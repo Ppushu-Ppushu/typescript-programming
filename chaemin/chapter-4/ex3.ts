@@ -5,14 +5,36 @@
  */
 
 // 값의 구조를 정의 하는 타입
-type Reservation = {
-  from: Date;
-  to?: Date;
-  destination: string;
-};
+type Reservation = unknown;
 
 // 함수의 타입을 정의하는 타입
 type Reserve = {
   (from: Date, to: Date, destination: string): Reservation;
   (from: Date, destination: string): Reservation;
+  (destination: string): Reservation;
 };
+
+let reserve: Reserve = (
+  fromOrDestination: Date | string,
+  toOrDestination?: Date | string,
+  destination?: string
+) => {
+  if (
+    fromOrDestination instanceof Date &&
+    toOrDestination instanceof Date &&
+    destination !== undefined
+  ) {
+    // 편도 여행 예약
+  } else if (
+    fromOrDestination instanceof Date &&
+    typeof toOrDestination === "string"
+  ) {
+    // 왕복 여행 예약
+  } else if (typeof fromOrDestination === "string") {
+    // 목적지만 주어진 경우
+  }
+};
+
+reserve(new Date("2025-07-01"), new Date("2025-07-10"), "Hawaii");
+reserve(new Date("2025-07-01"), "Hawaii");
+reserve("Hawaii");
