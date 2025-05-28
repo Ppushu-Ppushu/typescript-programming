@@ -17,3 +17,14 @@
  * // 임의의 개수의 인수를 전달할 수 있어야 함
  * is([1], [1, 2], [1, 2, 3]) // false
  */
+
+// 우선, is(a, b) => a와 b가 같은 타입일 경우에만 비교 가능하도록 짜야 한다. (다르면 컴파일 에러)
+function is<T>(...args: [T, ...T[]]): boolean {
+  return args.every((arg) => arg === args[0]);
+}
+
+is(1, 1, 1); // true
+is("a", "a", "b"); // false
+is(true, true, false); // false
+// is(10, "10"); // ❌ Error: Argument of type 'string' is not assignable to parameter of type 'number'
+is([1], [1]); // false (참조형 비교이므로 값이 같아도 false)
