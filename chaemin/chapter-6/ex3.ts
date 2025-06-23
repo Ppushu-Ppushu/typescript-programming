@@ -3,3 +3,8 @@
  * 예를 들어 Exclusive<1 | 2 | 3, 2 | 3 | 4>의 결과는 1 | 4다.
  * 타입 검사기가 Exclusive<1 | 2, 2 | 4>를 어떻게 평가하는지 단계별로 서술하자.
  */
+
+type Exclusive<T, U> = Exclude<T | U, T & U>;
+
+type Result1 = Exclusive<1 | 2 | 3, 2 | 3 | 4>; // 1 | 4
+type Result2 = Exclusive<1 | 2, 2 | 4>; // 1 | 4
