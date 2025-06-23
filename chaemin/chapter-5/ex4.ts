@@ -1,0 +1,41 @@
+/**
+ * 4. 타입 안정성을 갖춘 빌더 패턴을 설계하는 방법을 고안해보자.
+ * "5.11.2 빌더 패턴"에서 구현한 빌더 패턴을 다음처럼 확장하자.
+ *
+ * a) 최소한 URL과 method를 설정한 다음에만 .send를 호출할 수 있음을 컴파일 타임에 보장한다.
+ * 메서드를 특정 순서로만 호출하도록 강제하면 이 기능을 더 쉽게 구현할 수 있을까?
+ * (this 대신 무엇을 반환할 수 있는가?)
+ *
+ * b) a의 조건을 만족하면서도 호출자가 원하는 순서대로 메서드들을 호출하도록 허용할 수 있을까?
+ * (타입스크립트의 어떤 기능을 이용하면 각각의 메서드를 호출할 때마다 this에 반환 타입을 '추가'할 수 있을까?)
+ */
+
+class RequestBuilder {
+  private url: string | null = null; // 비공개 변수
+  private method: "get" | "post" | null = null;
+  private data: object | null = null;
+
+  setUrl(url: string): this {
+    // 비공개 변수로 설정한 url 추적
+    this.url = url;
+    return this; // 반환 타입 this
+  }
+
+  setMethod(method: "get" | "post"): this {
+    this.method = method;
+    return this;
+  }
+
+  setData(data: object): this {
+    this.data = data;
+    return this;
+  }
+
+  send() {}
+}
+
+new RequestBuilder()
+  .setUrl("/users")
+  .setMethod("get")
+  .setData({ firstName: "Lee" });
+//   .send();
